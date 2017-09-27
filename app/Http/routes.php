@@ -24,3 +24,4 @@ Route::post('/service/login','Service\MemberController@login');
 Route::get('/category/parent_id/{parent_id}','Service\BookController@getCategoryByParentId');
 Route::get('/product/category_id/{category_id}', 'View\BookController@toProduct');
 Route::get('/pdt_detail/product_id/{product_id}', 'View\BookController@getProductById');
+Route::get('/add_cart/product_id/{product_id}', 'Service\CartController@addCart');

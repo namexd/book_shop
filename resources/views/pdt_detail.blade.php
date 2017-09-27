@@ -38,10 +38,10 @@
 
     <div class="bk_fix_bottom">
         <div class="bk_half_area">
-            <button class="weui_btn weui_btn_primary">加入购物车</button>
+            <button class="weui_btn weui_btn_primary" onclick="addCart({{ $product->id }})">加入购物车</button>
         </div>
         <div class="bk_half_area">
-            <button class="weui_btn weui_btn_default">结算</button>
+            <button class="weui_btn weui_btn_default">结算(<span id="cart_num">{{ $count }}</span>)</button>
         </div>
     </div>
 @endsection
@@ -55,5 +55,40 @@
             pagination:$(".swiper-pagination"),
 
         });
+        function addCart( product_id ) {
+            $.ajax({
+                type: 'GET',
+                url: '/add_cart/product_id/' + product_id,
+                dataType: 'json',
+                cache: false,
+                success: function (data) {
+                    if (data == null) {
+                        $('.bk_toptips').show();
+                        $('.bk_toptips span').html('服务端错误');
+                        setTimeout(function () {
+                            $('.bk_toptips').hide();
+                        }, 2000);
+                        return;
+                    }
+                    if (data.status != 0) {
+                        $('.bk_toptips').show();
+                        $('.bk_toptips span').html(data.message);
+                        setTimeout(function () {
+                            $('.bk_toptips').hide();
+                        }, 2000);
+                        return;
+                    }
+                    var num=$("#cart_num").html();
+                      if (num=='') num=0;
+                    $("#cart_num").html(Number(num)+1);
+
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr);
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+        }
     </script>
 @endsection

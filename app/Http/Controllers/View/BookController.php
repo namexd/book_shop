@@ -23,12 +23,23 @@ class BookController extends Controller
         $products=Product::where('category_id',$category_id)->get();
         return view('product',compact('products'));
     }
-    public function getProductById($product_id)
+    public function getProductById(Request $request,$product_id)
     {
         $product=Product::find($product_id);
         $pdt_content=PdtContent::where('product_id',$product_id)->first();
         $pdt_images=PdtImages::where('product_id',$product_id)->get();
-        return view('pdt_detail',compact('product','pdt_content','pdt_images'));
+
+        $bk_cart = $request->cookie('bk_cart');
+        $bk_cart_arr = $bk_cart != null ? explode(',', $bk_cart) : array();
+        $count = 0;
+        foreach ($bk_cart_arr as $value) {
+            $index = strpos($value, ':');
+            if (substr($value, 0, $index) == $product_id) {
+                $count = ((int) substr($value, $index+1));
+                break;
+            }
+        }
+        return view('pdt_detail',compact('product','pdt_content','pdt_images','count'));
     }
 
 }
