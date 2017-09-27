@@ -25,3 +25,4 @@ Route::get('/category/parent_id/{parent_id}','Service\BookController@getCategory
 Route::get('/product/category_id/{category_id}', 'View\BookController@toProduct');
 Route::get('/pdt_detail/product_id/{product_id}', 'View\BookController@getProductById');
 Route::get('/add_cart/product_id/{product_id}', 'Service\CartController@addCart');
+Route::get('/cart', 'View\CartController@toCart');

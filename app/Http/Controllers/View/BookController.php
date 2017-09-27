@@ -25,6 +25,7 @@ class BookController extends Controller
     }
     public function getProductById(Request $request,$product_id)
     {
+
         $product=Product::find($product_id);
         $pdt_content=PdtContent::where('product_id',$product_id)->first();
         $pdt_images=PdtImages::where('product_id',$product_id)->get();

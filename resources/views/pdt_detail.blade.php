@@ -41,7 +41,7 @@
             <button class="weui_btn weui_btn_primary" onclick="addCart({{ $product->id }})">加入购物车</button>
         </div>
         <div class="bk_half_area">
-            <button class="weui_btn weui_btn_default">结算(<span id="cart_num">{{ $count }}</span>)</button>
+            <button class="weui_btn weui_btn_default" onclick="toCart()">结算(<span id="cart_num">{{ $count }}</span>)</button>
         </div>
     </div>
 @endsection
@@ -89,6 +89,9 @@
                     console.log(error);
                 }
             });
+        }
+        function toCart() {
+            location.href='/cart'
         }
     </script>
 @endsection
